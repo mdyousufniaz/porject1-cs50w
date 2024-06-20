@@ -3,6 +3,9 @@
 import os
 import sys
 
+from encyclopedia.util import get_entry
+
+
 
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'wiki.settings')
@@ -15,6 +18,7 @@ def main():
             "forget to activate a virtual environment?"
         ) from exc
     execute_from_command_line(sys.argv)
+
 
 
 if __name__ == '__main__':
