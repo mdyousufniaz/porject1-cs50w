@@ -119,3 +119,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#CSRF Trusted origin
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://solid-space-zebra-4jgwj44x664hjj69.github.dev-8000.preview.app.github.dev',
+    'https://localhost:8000'
+]
