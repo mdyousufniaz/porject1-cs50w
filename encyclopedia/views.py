@@ -4,6 +4,8 @@ from markdown2 import markdown
 
 from . import util
 
+from random import choice
+
 
 def index(request):
     if request.method == "POST":
@@ -29,4 +31,42 @@ def entry(request, title):
         "title": title,
         "content": content
     })
+
+def random_entry(request):
+    random_title = choice(util.list_entries())
+    return redirect('entry', title=random_title)
+
+def format_page(request):
+    if request.method == "GET":
+        if request.GET["id"] == "new":
+            message = "Create a New"
+            form = util.EntryForm()
+        else:
+            message = "Update Existing"
+            title = request.GET["id"]
+            form = util.EntryForm(title=title, content=util.get_entry(title))
+        return render(request, "encyclopedia/format_page.html", {
+            "heading": message,
+            "form": form
+        })
+
+    else:
+        form = util.EntryForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data['title']
+            content = form.cleaned_data['content']
+            print(title, content)
+            util.save_entry(title, content)
+            return redirect('entry', title=form.cleaned_data['title'])
+        else:
+            return render(request, "encyclopedia/format_page.html", {
+            "heading": message,
+            "form": form
+        })
+
+
+
+
+
+
 

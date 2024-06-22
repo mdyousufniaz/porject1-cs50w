@@ -1,0 +1,15 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    format page
+{% endblock %}
+
+{% block body %}
+    <h1> {{ heading }} Content: </h1>
+
+    <form action="{% url 'format_page' %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}

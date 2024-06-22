@@ -6,6 +6,9 @@
 
 {% block body %}
     {% if content %}
+        <div>
+            <a href="{% url 'format_page' %}?id={{ title }}">Edit this page</a>
+        </div>
         {{ content|safe }}
     {% else %}
         <h1>The requested page was not found.</h1>

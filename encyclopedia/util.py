@@ -2,6 +2,7 @@ import re
 
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
+from django.forms import CharField, Form, Textarea
 
 
 def list_entries():
@@ -38,3 +39,16 @@ def get_entry(title):
 
 def simillar_entries(name):
     return [title for title in list_entries() if title.lower().find(name.lower()) >= 0]
+
+class EntryForm(Form):
+    title = CharField(label="Title", required=True)
+    content = CharField(label="Content", widget=Textarea, required=True)
+
+    def __init__(self,*args, **kwargs):
+        title = kwargs.pop('title', None)
+        content = kwargs.pop('content', None)
+        super().__init__(*args, **kwargs)
+        if title:
+            self.fields['title'].initial = title
+        if content:
+            self.fields['content'].initial = content
